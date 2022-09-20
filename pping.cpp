@@ -320,9 +320,10 @@ static void process_packet(const Packet& pkt)
         flows.at(dststr + "+" + srcstr)->bytesDep = fBytes;
 
         if (machineReadable) {
-            printf("%" PRId64 ".%06d %.6f %.6f %.0f %.0f %.0f",
-                    int64_t(capTm + offTm), int((capTm - floor(capTm)) * 1e6),
-                    rtt, fr->min, fBytes, dBytes, pBytes);
+            printf("%" PRId64 ".%06d %.6f %.6f tsecr=%u ack=%u %.0f %.0f %.0f",
+		   int64_t(capTm + offTm), int((capTm - floor(capTm)) * 1e6),
+		   rtt, fr->min, rcv_tsecr, t_tcp->ack_seq(), fBytes, dBytes,
+		   pBytes);
         } else {
             char tbuff[80];
             struct tm* ptm = std::localtime(&result);
